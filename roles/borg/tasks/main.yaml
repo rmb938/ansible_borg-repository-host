@@ -1,0 +1,54 @@
+---
+- name: Set timezone
+  community.general.timezone:
+    name: America/Chicago
+
+- name: Configure Auto Upgrades
+  ansible.builtin.template:
+    src: etc/apt/apt.conf.d/50unattended-upgrades
+    dest: /etc/apt/apt.conf.d/50unattended-upgrades
+    mode: "0644"
+  register: unattended_upgrades_50
+
+- name: Restart unattended-upgrades # noqa: no-handler
+  ansible.builtin.systemd:
+    name: unattended-upgrades
+    state: restarted
+  when: unattended_upgrades_50.changed
+
+- name: Install Borg Backup
+  ansible.builtin.package:
+    name: borgbackup
+    state: present
+
+- name: Create groups
+  ansible.builtin.group:
+    name: "{{ item.user }}"
+    state: present
+  with_items: "{{ repositories }}"
+
+- name: Create users
+  ansible.builtin.user:
+    name: "{{ item.user }}"
+    group: "{{ item.user }}"
+    shell: "/bin/bash"
+    password: "!" # lock password
+    state: present
+  with_items: "{{ repositories }}"
+
+- name: Create host directory
+  ansible.builtin.file:
+    path: "/home/{{ item.user }}/{{ item.host }}"
+    owner: "{{ item.user }}"
+    group: "{{ item.user }}"
+    mode: "0700"
+    state: directory
+  with_items: "{{ repositories }}"
+
+- name: Setup ssh keys
+  ansible.posix.authorized_key:
+    user: "{{ item.user }}"
+    key: "{{ item.ssh_key }}"
+    key_options: 'command="cd /home/{{ item.user }}/{{ item.host }};borg serve --restrict-to-path /home/{{ item.user }}/{{ item.host }}",restrict'
+    manage_dir: true
+  with_items: "{{ repositories }}"
