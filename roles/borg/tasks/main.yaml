@@ -1,4 +1,6 @@
 ---
+# TODO: CIS benchmark fixing once it's released for 24.04
+
 - name: Set timezone
   community.general.timezone:
     name: America/Chicago
