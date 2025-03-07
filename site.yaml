@@ -5,7 +5,8 @@
   vars:
     repositories:
       - user: v52b7ukj
-        ssh_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJWVnbWnQpWJLEYMpIc4GcURFIQ574QSubXc5sfQ2Rzs rbelgrave@magic-muffin.rmb938.me"
+        ssh_keys:
+          - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJWVnbWnQpWJLEYMpIc4GcURFIQ574QSubXc5sfQ2Rzs rbelgrave@magic-muffin.rmb938.me"
         host: magic-muffin.rmb938.me
   roles:
     - borg

@@ -49,8 +49,8 @@
 
 - name: Setup ssh keys
   ansible.posix.authorized_key:
-    user: "{{ item.user }}"
-    key: "{{ item.ssh_key }}"
-    key_options: 'command="cd /home/{{ item.user }}/{{ item.host }};borg serve --restrict-to-path /home/{{ item.user }}/{{ item.host }}",restrict'
+    user: "{{ item.0.user }}"
+    key: "{{ item.1 }}"
+    key_options: 'command="cd /home/{{ item.0.user }}/{{ item.0.host }};borg serve --restrict-to-path /home/{{ item.0.user }}/{{ item.0.host }}",restrict'
     manage_dir: true
-  with_items: "{{ repositories }}"
+  loop: "{{ repositories | subelements('ssh_keys') }}"
