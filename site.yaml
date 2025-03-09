@@ -7,6 +7,11 @@
       - user: v52b7ukj
         ssh_keys:
           - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJWVnbWnQpWJLEYMpIc4GcURFIQ574QSubXc5sfQ2Rzs rbelgrave@magic-muffin.rmb938.me"
+          - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFutfN7VVJImc1/URq84u6Vn/85Qj9G3B1zqORh31TT9 rbelgrave@magic-pie.rmb938.me"
         host: magic-muffin.rmb938.me
+      - user: jp42ktph
+        ssh_keys:
+          - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFutfN7VVJImc1/URq84u6Vn/85Qj9G3B1zqORh31TT9 rbelgrave@magic-pie.rmb938.me"
+        host: magic-pie.rmb938.me
   roles:
     - borg
